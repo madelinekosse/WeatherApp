@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from './Button'
 import './App.css';
 
 const WUNDERGROUND_KEY = "b56f2c0800fdf6e4";
@@ -193,6 +194,7 @@ class App extends Component {
             <div {...this.props} className="app">
                 {this.renderWeather()}
             </div>
+            <button>{this.props.location}</button>
         </div>
     );
   }

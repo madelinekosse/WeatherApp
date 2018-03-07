@@ -8,6 +8,7 @@
   "dependencies": {
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-geocode": "0.0.7",
     "react-github-corner": "^0.3.0",
     "react-native": "^0.54.0"
   },

@@ -7,9 +7,19 @@ class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showComponent: false
+      showComponent: false,
+      location: 'Japan'
     };
     this._onButtonClick = this._onButtonClick.bind(this);
+    this.changeLocation = this.changeLocation.bind(this);
+  }
+
+  componentDidMount() {
+     this.setState({location: this.props.location});
+  }
+
+  changeLocation = (e) => {
+    this.setState({location: e.target.value});
   }
 
   _onButtonClick() {
@@ -22,11 +32,12 @@ class Search extends Component {
   render() {
     return (
       <div>
-            <Button onClick={this._onButtonClick}/>
-            {this.state.showComponent ?
-               <App/> :
-               null
-            }
+        <input value={this.state.location} onChange={this.changeLocation}/>
+        <Button onClick={this._onButtonClick}/>
+        {this.state.showComponent ?
+           <App location={this.state.location}/> :
+           null
+        }
       </div>
     );
   }
