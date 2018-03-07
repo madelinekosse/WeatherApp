@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import GithubCorner from "react-github-corner";
 import './App.css';
 
 const WUNDERGROUND_KEY = "b56f2c0800fdf6e4";
@@ -191,15 +190,7 @@ class App extends Component {
   render() {
     return (
         <div>
-            <GithubCorner
-                href="https://github.com/IonicaBizau/react-weather-app"
-                bannerColor="#3498db"
-                octoColor="#fff"
-                width={80}
-                height={80}
-                direction="right"
-            />
-            <div className="app">
+            <div {...this.props} className="app">
                 {this.renderWeather()}
             </div>
         </div>
