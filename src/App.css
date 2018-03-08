@@ -11,9 +11,9 @@ body {
 }
 
 .app {
+    background-image: url('assets/backgrounds/app-iphone.jpg');
     width: 600px;
-    max-width: 100%;
-    background: #3498db;
+    height: 928px;
     padding: 3em;
     text-align: center;
     position: fixed;
