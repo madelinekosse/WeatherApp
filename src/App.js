@@ -74,31 +74,18 @@ class App extends Component {
   }
 
   check () {
-      /*var REQUEST_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyA_wOxjHNfPhmKu2zBo8N5HXsEpewgIQF0";
+
+      const REQUEST_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyA_wOxjHNfPhmKu2zBo8N5HXsEpewgIQF0";
       fetch(REQUEST_URL)
-        .then(response => response.json())
-        .then(locate => {
-           this.setState({
-               locate
-           });
-        });*/
-
-    //crd['results'][0]['geometry']['location']['lng']
-
-      fetch("https://ipinfo.io/json")
         .then(res => res.json())
-        .then(ip => {
-            let lang = ip.country;
-            if (!SUPPORTED_LANGUAGES.includes(lang)) {
-                lang = "EN";
-            }
-            let crd = this.state.locate;
-            crd = crd || {
-                latitude: "35.6895"
-              , longitude: "139.6917"
+        .then(locate => {
+            let crd = locate;
+            crd = {
+                latitude: locate.results[0].geometry.location.lat
+              , longitude: locate.results[0].geometry.location.lng
             }
             const query = [crd.latitude, crd.longitude].join(",");
-            const WUNDERGROUND_URL = `https://api.wunderground.com/api/${WUNDERGROUND_KEY}/forecast/lang:${lang}/q/${query}.json`;
+            const WUNDERGROUND_URL = `https://api.wunderground.com/api/${WUNDERGROUND_KEY}/forecast/q/${query}.json`;
             return fetch(WUNDERGROUND_URL)
         })
         .then(c => c.json())
