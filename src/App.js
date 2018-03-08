@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Button from './Button';
 import './App.css';
 
 const WUNDERGROUND_KEY = "b56f2c0800fdf6e4";
@@ -61,7 +60,6 @@ class App extends Component {
       super(props);
       this.state = {
         dest: '',
-        t: ''
       };
 
       var options = {
@@ -114,7 +112,7 @@ class App extends Component {
            .then(d => d.json())
            .then(tide => {
                this.setState({
-                   t : tide
+                   tide
                 });
            });
   }
@@ -124,7 +122,7 @@ class App extends Component {
       const todaySIMP = this.state.forecast.forecast.simpleforecast.forecastday[0];
       const temp = getTemp(todayTXT.fcttext_metric);
 
-      const ti = this.state.t;
+      const t = this.state.tide.tide.tideInfo;
 
       let icon = getIcon(todayTXT.icon);
       let hours = new Date().getHours();
@@ -144,7 +142,7 @@ class App extends Component {
                 </div>
                 {tempElm}
             </div>
-            <p className="icon-description">{todaySIMP.conditions} {ti.tide.tideInfo.type}</p>
+            <p className="icon-description">{t.type}{todaySIMP.conditions}</p>
           </div>
       );
   }
@@ -207,13 +205,13 @@ class App extends Component {
     return (
         <div>
             <div {...this.props} className="app">
+              <button>Previous Day</button><button>Next Day</button>
               <div className="search-location-name">
-                {this.state.dest = this.props.location}
+                {this.setState({dest : this.props.location})}
+                {this.state.dest}
                 </div>
                 {this.renderWeather()}
             </div>
-            <button onChange={this.changeLocation}>{this.state.dest = this.props.location}</button>
-            <button>{this.state.dest}</button>
         </div>
     );
   }
