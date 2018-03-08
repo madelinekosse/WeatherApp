@@ -205,7 +205,9 @@ class App extends Component {
     return (
         <div>
             <div {...this.props} className="app">
+              <div className="search-location-name">
                 {this.state.dest = this.props.location}
+                </div>
                 {this.renderWeather()}
             </div>
             <button onChange={this.changeLocation}>{this.state.dest = this.props.location}</button>
