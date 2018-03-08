@@ -31,7 +31,7 @@ class Search extends Component {
 
   render() {
     return (
-      <div className="app">
+      <div classname = "app">
         <input value={this.state.location} onChange={this.changeLocation}/>
         <Button onClick={this._onButtonClick}/>
         {this.state.showComponent ?

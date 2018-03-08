@@ -109,7 +109,7 @@ class App extends Component {
       const todaySIMP = this.state.forecast.forecast.simpleforecast.forecastday[0];
       const temp = getTemp(todayTXT.fcttext_metric);
 
-      const t = this.state.tide.tide.tideInfo;
+
 
       let icon = getIcon(todayTXT.icon);
       let hours = new Date().getHours();
@@ -117,21 +117,32 @@ class App extends Component {
           icon = "starry";
       }
 
-
-      if (temp) {
-          var tempElm = <div className="big-temp">{temp}</div>;
-      }
-
       return (
-          <div className="weather-today">
-            <div className="icon-wrapper">
-                <div className={`icon-big ${icon}`}>
-                </div>
-                {tempElm}
+          <div className="weather">
+            <div className="temperature">
+                <div className={`icon-big ${icon}`}></div>
+                <div className="big-temp">{temp}</div>
             </div>
-            <p className="icon-description">{t.type}{todaySIMP.conditions}</p>
+            <div className = "wind">Wind</div>
+            <div className = "windspeed">
+              {todaySIMP.avewind.mph}
+            </div>
+            <div className = "winddir">
+              {todaySIMP.avewind.dir}
+            </div>
+
           </div>
       );
+
+      //todaySIMP.date.weekday
+      //todaySIMP.high.celcius
+      //todaySIMP.low.celcius
+      //todaySIMP.icon
+      //todaySIMP.avewind.mph
+      //todaySIMP.avewind.dir
+      //todaySIMP.avehumidity
+      //todaySIMP.qpf_allday
+
   }
 
   renderDay (day, index) {
@@ -175,15 +186,14 @@ class App extends Component {
   renderWeather () {
       if (!this.state.forecast) {
           return (
-            <div className="weather-container">
+            <div className="loading-message">
                 <p>Loading...</p>
             </div>
           );
       }
       return (
-        <div className="weather-container">
+        <div>
             {this.renderWeatherToday()}
-            {this.renderNextDays()}
         </div>
       );
   }
