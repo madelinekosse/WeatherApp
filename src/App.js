@@ -60,7 +60,8 @@ class App extends Component {
   constructor (props) {
       super(props);
       this.state = {
-        dest: ''
+        dest: '',
+        t: ''
       };
 
       var options = {
@@ -69,21 +70,9 @@ class App extends Component {
 	  maximumAge: 0
       };
 
-      /*if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(pos => {
-              this.setState({
-                  coordinates: pos.coords
-              });
-              this.check();
-          }, () => {
-              this.check();
-          }, options);
-      }*/
-
       this.check();
 
       setInterval(() => this.check(), 10 * 60 * 1000);
-      //this.changeLocation = this.changeLocation.bind(this);
   }
 
   check () {
@@ -120,6 +109,14 @@ class App extends Component {
                 forecast
             });
         });
+
+        fetch("http://api.wunderground.com/api/b56f2c0800fdf6e4/tide/q/CA/San_Francisco.json")
+           .then(d => d.json())
+           .then(tide => {
+               this.setState({
+                   t : tide
+                });
+           });
   }
 
   renderWeatherToday () {
@@ -127,7 +124,7 @@ class App extends Component {
       const todaySIMP = this.state.forecast.forecast.simpleforecast.forecastday[0];
       const temp = getTemp(todayTXT.fcttext_metric);
 
-
+      const ti = this.state.t;
 
       let icon = getIcon(todayTXT.icon);
       let hours = new Date().getHours();
@@ -147,7 +144,7 @@ class App extends Component {
                 </div>
                 {tempElm}
             </div>
-            <p className="icon-description">{todaySIMP.conditions}</p>
+            <p className="icon-description">{todaySIMP.conditions} {ti.tide.tideInfo.type}</p>
           </div>
       );
   }
