@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Button from './Button';
 import './App.css';
 
 const WUNDERGROUND_KEY = "b56f2c0800fdf6e4";
@@ -60,7 +59,7 @@ class App extends Component {
   constructor (props) {
       super(props);
       this.state = {
-        dest: ''
+        dest: '',
       };
 
       var options = {
@@ -69,21 +68,9 @@ class App extends Component {
 	  maximumAge: 0
       };
 
-      /*if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(pos => {
-              this.setState({
-                  coordinates: pos.coords
-              });
-              this.check();
-          }, () => {
-              this.check();
-          }, options);
-      }*/
-
       this.check();
 
       setInterval(() => this.check(), 10 * 60 * 1000);
-      //this.changeLocation = this.changeLocation.bind(this);
   }
 
   check () {
@@ -120,12 +107,22 @@ class App extends Component {
                 forecast
             });
         });
+
+        fetch("http://api.wunderground.com/api/b56f2c0800fdf6e4/tide/q/CA/San_Francisco.json")
+           .then(d => d.json())
+           .then(tide => {
+               this.setState({
+                   tide
+                });
+           });
   }
 
   renderWeatherToday () {
       const todayTXT = this.state.forecast.forecast.txt_forecast.forecastday[0];
       const todaySIMP = this.state.forecast.forecast.simpleforecast.forecastday[0];
       const temp = getTemp(todayTXT.fcttext_metric);
+
+
 
       let icon = getIcon(todayTXT.icon);
       let hours = new Date().getHours();
@@ -146,8 +143,7 @@ class App extends Component {
             <div className = "winddir">
               {todaySIMP.avewind.dir}
             </div>
-            <div className = "humidity">Humidity</div>
-            <div className = "avehumidity">{todaySIMP.avehumidity}</div>
+
           </div>
       );
 
@@ -219,13 +215,13 @@ class App extends Component {
     return (
         <div>
             <div {...this.props} className="app">
+              <button>Previous Day</button><button>Next Day</button>
               <div className="search-location-name">
-                {this.state.dest = this.props.location}
+                {this.setState({dest : this.props.location})}
+                {this.state.dest}
                 </div>
                 {this.renderWeather()}
             </div>
-            <button onChange={this.changeLocation}>{this.state.dest = this.props.location}</button>
-            <button>{this.state.dest}</button>
         </div>
     );
   }
