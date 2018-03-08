@@ -94,10 +94,19 @@ class App extends Component {
             if (!SUPPORTED_LANGUAGES.includes(lang)) {
                 lang = "EN";
             }
-            let crd = this.state.coordinates;
-            crd = crd || {
-                latitude: "39.9042"
-              , longitude: "116.4074"
+            let crd = this.state.dest;
+            var response = fetch("https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyA_wOxjHNfPhmKu2zBo8N5HXsEpewgIQF0");
+            //.then(response => response.json())
+            if (crd['status'] != 'OK'){
+                crd = crd || {
+                    latitude: "39.9042",
+                    longitude: "116.4074"
+                }
+            }else{
+                crd = crd || {
+                   latitude: crd['results'][0]['geometry']['location']['lat'],
+                   longitude: crd['results'][0]['geometry']['location']['lng']
+                }
             }
             const query = [crd.latitude, crd.longitude].join(",");
             const WUNDERGROUND_URL = `https://api.wunderground.com/api/${WUNDERGROUND_KEY}/forecast/lang:${lang}/q/${query}.json`;
@@ -114,6 +123,8 @@ class App extends Component {
   renderWeatherToday () {
       const today = this.state.forecast.forecast.txt_forecast.forecastday[0];
       const temp = getTemp(today.fcttext_metric);
+
+      const day = this.state.forecast.forecast.simpleforecast.forecast[0];
 
 
       let icon = getIcon(today.icon);

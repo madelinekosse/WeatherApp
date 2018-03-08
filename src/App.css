@@ -13,7 +13,7 @@ body {
 .app {
     width: 600px;
     max-width: 100%;
-    background: #3498db;
+    background: red;
     padding: 3em;
     text-align: center;
     position: fixed;
