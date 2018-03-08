@@ -141,13 +141,18 @@ class App extends Component {
 
   renderDay (day, index) {
       const temp = getTemp(day.fcttext_metric);
+
       if (temp) {
           var tempElm = <div className="small-temp">{temp}</div>;
       }
 
       return (
             <div className="day" key={index}>
+<<<<<<< HEAD
                 <div className="name-of-days">ok</div>
+=======
+                <div className="name-of-days">{day.title}</div>
+>>>>>>> e961725c5ea6f6f37e28a3fad7dfa13f3f138ae0
                 <div className="day-description">
                     {day.fcttext_metric}
                 </div>
