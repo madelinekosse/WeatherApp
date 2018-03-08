@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Button from './Button'
+import Button from './Button';
 import './App.css';
 
 const WUNDERGROUND_KEY = "b56f2c0800fdf6e4";
@@ -83,10 +83,21 @@ class App extends Component {
       this.check();
 
       setInterval(() => this.check(), 10 * 60 * 1000);
-      this.changeLocation = this.changeLocation.bind(this);
+      //this.changeLocation = this.changeLocation.bind(this);
   }
 
   check () {
+      /*var REQUEST_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyA_wOxjHNfPhmKu2zBo8N5HXsEpewgIQF0";
+      fetch(REQUEST_URL)
+        .then(response => response.json())
+        .then(locate => {
+           this.setState({
+               locate
+           });
+        });*/
+
+    //crd['results'][0]['geometry']['location']['lng']
+
       fetch("https://ipinfo.io/json")
         .then(res => res.json())
         .then(ip => {
@@ -94,10 +105,10 @@ class App extends Component {
             if (!SUPPORTED_LANGUAGES.includes(lang)) {
                 lang = "EN";
             }
-            let crd = this.state.coordinates;
+            let crd = this.state.locate;
             crd = crd || {
-                latitude: "39.9042"
-              , longitude: "116.4074"
+                latitude: "35.6895"
+              , longitude: "139.6917"
             }
             const query = [crd.latitude, crd.longitude].join(",");
             const WUNDERGROUND_URL = `https://api.wunderground.com/api/${WUNDERGROUND_KEY}/forecast/lang:${lang}/q/${query}.json`;
