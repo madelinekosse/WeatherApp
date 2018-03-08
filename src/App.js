@@ -147,7 +147,7 @@ class App extends Component {
 
       return (
             <div className="day" key={index}>
-                <div className="name-of-days">Okay</div>
+                <div className="name-of-days">ok</div>
                 <div className="day-description">
                     {day.fcttext_metric}
                 </div>
