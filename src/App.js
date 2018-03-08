@@ -190,14 +190,6 @@ class App extends Component {
       );
   }
 
-  componentDidMount() {
-       this.setState({dest: this.props.dest});
-    }
-
-    changeLocation = (e) => {
-      this.setState({dest: e.target.value});
-    }
-
   renderWeather () {
       if (!this.state.forecast) {
           return (
