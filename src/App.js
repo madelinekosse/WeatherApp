@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from './Button';
 import './App.css';
 
 const WUNDERGROUND_KEY = "b56f2c0800fdf6e4";
@@ -25,26 +26,6 @@ const ICON_SET = {
     cloudy: "cloudy"
 };
 
-const SUPPORTED_LANGUAGES = [
-    "AF", "AL", "AR", "HY", "AZ",
-    "EU", "BY", "BU", "LI", "MY",
-    "CA", "CN", "TW", "CR", "CZ",
-    "DK", "DV", "NL", "EN", "EO",
-    "ET", "FA", "FI", "FR", "FC",
-    "GZ", "DL", "KA", "GR", "GU",
-    "HT", "IL", "HI", "HU", "IS",
-    "IO", "ID", "IR", "IT", "JP",
-    "JW", "KM", "KR", "KU", "LA",
-    "LV", "LT", "ND", "MK", "MT",
-    "GM", "MI", "MR", "MN", "NO",
-    "OC", "PS", "GN", "PL", "BR",
-    "PA", "RO", "RU", "SR", "SK",
-    "SL", "SP", "SI", "SW", "CH",
-    "TL", "TT", "TH", "TR", "TK",
-    "UA", "UZ", "VU", "CY", "SN",
-    "JI", "YI"
-];
-
 function getIcon(icon) {
     return ICON_SET[icon];
 }
@@ -59,7 +40,7 @@ class App extends Component {
   constructor (props) {
       super(props);
       this.state = {
-        dest: '',
+        dest: ''
       };
 
       var options = {
@@ -68,9 +49,21 @@ class App extends Component {
 	  maximumAge: 0
       };
 
+      /*if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(pos => {
+              this.setState({
+                  coordinates: pos.coords
+              });
+              this.check();
+          }, () => {
+              this.check();
+          }, options);
+      }*/
+
       this.check();
 
       setInterval(() => this.check(), 10 * 60 * 1000);
+      //this.changeLocation = this.changeLocation.bind(this);
   }
 
   check () {
@@ -88,10 +81,7 @@ class App extends Component {
       fetch("https://ipinfo.io/json")
         .then(res => res.json())
         .then(ip => {
-            let lang = ip.country;
-            if (!SUPPORTED_LANGUAGES.includes(lang)) {
-                lang = "EN";
-            }
+            let lang = "EN";
             let crd = this.state.locate;
             crd = crd || {
                 latitude: "35.6895"
@@ -107,22 +97,12 @@ class App extends Component {
                 forecast
             });
         });
-
-        fetch("http://api.wunderground.com/api/b56f2c0800fdf6e4/tide/q/CA/San_Francisco.json")
-           .then(d => d.json())
-           .then(tide => {
-               this.setState({
-                   tide
-                });
-           });
   }
 
   renderWeatherToday () {
       const todayTXT = this.state.forecast.forecast.txt_forecast.forecastday[0];
       const todaySIMP = this.state.forecast.forecast.simpleforecast.forecastday[0];
       const temp = getTemp(todayTXT.fcttext_metric);
-
-
 
       let icon = getIcon(todayTXT.icon);
       let hours = new Date().getHours();
@@ -143,7 +123,8 @@ class App extends Component {
             <div className = "winddir">
               {todaySIMP.avewind.dir}
             </div>
-
+            <div className = "humidity">Humidity</div>
+            <div className = "avehumidity">{todaySIMP.avehumidity}</div>
           </div>
       );
 
@@ -215,13 +196,13 @@ class App extends Component {
     return (
         <div>
             <div {...this.props} className="app">
-              <button>Previous Day</button><button>Next Day</button>
               <div className="search-location-name">
-                {this.setState({dest : this.props.location})}
-                {this.state.dest}
+                {this.state.dest = this.props.location}
                 </div>
                 {this.renderWeather()}
             </div>
+            <button onChange={this.changeLocation}>{this.state.dest = this.props.location}</button>
+            <button>{this.state.dest}</button>
         </div>
     );
   }
