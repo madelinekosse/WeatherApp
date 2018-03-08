@@ -11,9 +11,9 @@ body {
 }
 
 .app {
-    width: 600px;
-    max-width: 100%;
-    background: #3498db;
+    background-image: url('assets/backgrounds/app-iphone.jpg');
+    width: 414PX;
+    height: 736px;
     padding: 3em;
     text-align: center;
     position: fixed;
@@ -24,9 +24,14 @@ body {
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.19);
 }
 
+.search-location-name{
+    font-size: 4em;
+}
+
 .weather-today {
     height: 220px;
     position: relative;
+    margin-bottom: 20px;
 }
 
 h1 {
@@ -75,9 +80,11 @@ h1 {
 .name-of-days{
   text-align: left;
   float: left;
-  width: 75%;
-  top: +20px;
-  font-size: 1.2em;
+  width: 30%;
+  top: 20px;
+  font-size: 1.7em;
+  padding-bottom: 10px;
+  padding-top:10px;
 }
 
 .day-description {
