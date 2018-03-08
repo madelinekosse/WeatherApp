@@ -112,11 +112,13 @@ class App extends Component {
   }
 
   renderWeatherToday () {
-      const today = this.state.forecast.forecast.txt_forecast.forecastday[0];
-      const temp = getTemp(today.fcttext_metric);
+      const todayTXT = this.state.forecast.forecast.txt_forecast.forecastday[0];
+      const todaySIMP = this.state.forecast.forecast.simpleforecast.forecastday[0];
+      const temp = getTemp(todayTXT.fcttext_metric);
 
 
-      let icon = getIcon(today.icon);
+
+      let icon = getIcon(todayTXT.icon);
       let hours = new Date().getHours();
       if ((icon === "sunny" || icon === "clear") && (hours > 20 || hours < 7)) {
           icon = "starry";
@@ -134,7 +136,7 @@ class App extends Component {
                 </div>
                 {tempElm}
             </div>
-            <p className="icon-description">{today.fcttext_metric}</p>
+            <p className="icon-description">{todaySIMP.conditions}</p>
           </div>
       );
   }
