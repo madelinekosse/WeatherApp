@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Geocode from 'react-geocode';
 import Button from './Button';
 import './App.css';
 
