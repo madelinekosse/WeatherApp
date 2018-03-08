@@ -8,7 +8,7 @@ class Search extends Component {
     super(props);
     this.state = {
       showComponent: false,
-      location: 'Japan'
+      location: ''
     };
     this._onButtonClick = this._onButtonClick.bind(this);
     this.changeLocation = this.changeLocation.bind(this);

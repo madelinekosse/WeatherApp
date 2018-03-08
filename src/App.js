@@ -59,7 +59,9 @@ class App extends Component {
 
   constructor (props) {
       super(props);
-      this.state = {};
+      this.state = {
+        dest: ''
+      };
 
       var options = {
 	  enableHighAccuracy: true,
@@ -67,7 +69,7 @@ class App extends Component {
 	  maximumAge: 0
       };
 
-      if (navigator.geolocation) {
+      /*if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(pos => {
               this.setState({
                   coordinates: pos.coords
@@ -76,11 +78,12 @@ class App extends Component {
           }, () => {
               this.check();
           }, options);
-      }
+      }*/
 
       this.check();
 
       setInterval(() => this.check(), 10 * 60 * 1000);
+      this.changeLocation = this.changeLocation.bind(this);
   }
 
   check () {
@@ -93,8 +96,8 @@ class App extends Component {
             }
             let crd = this.state.coordinates;
             crd = crd || {
-                latitude: +ip.loc.split(",")[0]
-              , longitude: +ip.loc.split(",")[1]
+                latitude: "39.9042"
+              , longitude: "116.4074"
             }
             const query = [crd.latitude, crd.longitude].join(",");
             const WUNDERGROUND_URL = `https://api.wunderground.com/api/${WUNDERGROUND_KEY}/forecast/lang:${lang}/q/${query}.json`;
@@ -172,6 +175,14 @@ class App extends Component {
       );
   }
 
+  componentDidMount() {
+       this.setState({dest: this.props.dest});
+    }
+
+    changeLocation = (e) => {
+      this.setState({dest: e.target.value});
+    }
+
   renderWeather () {
       if (!this.state.forecast) {
           return (
@@ -192,9 +203,11 @@ class App extends Component {
     return (
         <div>
             <div {...this.props} className="app">
+                {this.state.dest = this.props.location}
                 {this.renderWeather()}
             </div>
-            <button>{this.props.location}</button>
+            <button onChange={this.changeLocation}>{this.state.dest = this.props.location}</button>
+            <button>{this.state.dest}</button>
         </div>
     );
   }
